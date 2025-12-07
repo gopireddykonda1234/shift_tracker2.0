@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shift Tracker 2.0</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Manifest (PWA) -->
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Service Worker -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- ACTIVE SHIFT BANNER -->
+    <div id="activeShiftBanner" class="active-banner hidden">
+        <span id="activeShiftText">Shift Running...</span>
+        <button id="bannerClockOutBtn" class="banner-btn">Clock Out</button>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app">
+
+        <!-- Floating Buttons (IN / OUT / Holiday) -->
+        <div class="fab-container">
+            <button id="clockInBtn" class="fab fab-in">IN</button>
+            <button id="clockOutBtn" class="fab fab-out">OUT</button>
+            <button id="holidayBtn" class="fab fab-holiday">H</button>
+        </div>
+
+        <h1 class="title">Shift Tracker 2.0</h1>
+        <p id="status" class="status">Ready</p>
+
+        <!-- SHIFT LIST -->
+        <h2 class="section-title">Shifts</h2>
+        <div id="shiftList" class="shift-list"></div>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" onclick="openTab('home')">Home</button>
+            <button class="nav-btn" onclick="openTab('summary')">Summary</button>
+            <button class="nav-btn" onclick="openTab('settings')">Settings</button>
+        </nav>
+    </div>
+
+    <!-- SUMMARY TAB -->
+    <div id="summaryTab" class="tab hidden">
+        <h2 class="title">Monthly Summary</h2>
+
+        <p id="summaryHours" class="summary-line">Total Hours: 0</p>
+        <p id="summaryGross" class="summary-line">Gross Pay: €0</p>
+
+        <h3 class="section-title">Deductions</h3>
+        <p id="summaryDeductionLohn" class="summary-line">Lohnsteuer: €0</p>
+        <p id="summaryDeductionRV" class="summary-line">Pension (RV): €0</p>
+        <p id="summaryDeductionA" class="summary-line">Extra A: €0</p>
+        <p id="summaryDeductionB" class="summary-line">Extra B: €0</p>
+
+        <h3 class="section-title">Net Pay</h3>
+        <p id="summaryNet" class="summary-total">Net: €0</p>
+
+        <button onclick="openTab('home')" class="back-btn">Back</button>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div id="settingsTab" class="tab hidden">
+        <h2 class="title">Payroll Settings</h2>
+
+        <div class="settings-group">
+            <label>Hourly Wage (€):</label>
+            <input id="wageInput" type="number" step="0.01" />
+        </div>
+
+        <div class="settings-group">
+            <label>Lohnsteuer (%):</label>
+            <input id="lohnPercentInput" type="number" step="0.01" />
+        </div>
+
+        <div class="settings-group">
+            <label>Pension (RV %) :</label>
+            <input id="rvPercentInput" type="number" step="0.01" />
+        </div>
+
+        <div class="settings-group">
+            <label>Extra Deduction A (%):</label>
+            <input id="extraAPercentInput" type="number" step="0.01" />
+        </div>
+
+        <div class="settings-group">
+            <label>Extra Deduction B (%):</label>
+            <input id="extraBPercentInput" type="number" step="0.01" />
+        </div>
+
+        <button onclick="saveSettings()" class="save-btn">Save Settings</button>
+        <button onclick="openTab('home')" class="back-btn">Back</button>
+    </div>
+
+    <!-- EDIT SHIFT MODAL (SLIDE-UP PANEL) -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Edit Shift</h2>
+
+            <label>Clock In:</label>
+            <input id="editStart" type="datetime-local" />
+
+            <label>Clock Out:</label>
+            <input id="editEnd" type="datetime-local" />
+
+            <label>Break (minutes):</label>
+            <input id="editBreak" type="number" />
+
+            <label>Holiday:</label>
+            <input id="editHoliday" type="checkbox" />
+
+            <button onclick="saveShiftEdit()" class="modal-save-btn">Save</button>
+            <button onclick="closeEditModal()" class="modal-cancel-btn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="app.js"></script>
+    <script src="payroll.js"></script>
+    <script src="settings.js"></script>
+
+</body>
+</html>
