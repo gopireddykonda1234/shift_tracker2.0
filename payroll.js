@@ -1,36 +1,24 @@
 /* ============================================================
-   PAYROLL ENGINE – SHIFT TRACKER 2.0
-   All deductions are PERCENTAGE-BASED (your decision)
-   This file calculates MONTHLY NET PAY only.
+   PAYROLL ENGINE – SHIFT TRACKER 3.0
+   Handles deduction calculations + summary UI updates.
 ============================================================ */
 
-/* Read percentage values from settings.js */
-function getPayrollSettings() {
-    return {
-        wage: getWage(),
-        lohnP: getLohnPercent(),
-        rvP: getRVPercent(),
-        extraAP: getExtraAPercent(),
-        extraBP: getExtraBPercent()
-    };
-}
-
-/* ============================================================
-   MAIN FUNCTION: CALCULATE MONTHLY NET PAY
-============================================================ */
+/* 
+   computePayroll(gross)
+   - Calculates all deductions based on saved percentages
+   - Updates summary UI for CURRENT MONTH
+*/
 function computePayroll(gross) {
     const S = getPayrollSettings();
 
-    // Convert percentages to decimal
     const lohn = gross * (S.lohnP / 100);
     const rv = gross * (S.rvP / 100);
-    const extraA = gross * (S.extraAP / 100);
-    const extraB = gross * (S.extraBP / 100);
+    const a = gross * (S.extraAP / 100);
+    const b = gross * (S.extraBP / 100);
 
-    const totalDeductions = lohn + rv + extraA + extraB;
-    const net = gross - totalDeductions;
+    const net = gross - lohn - rv - a - b;
 
-    // Update Summary UI
+    /* Update UI (Current Month Summary) */
     document.getElementById("summaryDeductionLohn").textContent =
         `Lohnsteuer: €${lohn.toFixed(2)}`;
 
@@ -38,16 +26,24 @@ function computePayroll(gross) {
         `Pension (RV): €${rv.toFixed(2)}`;
 
     document.getElementById("summaryDeductionA").textContent =
-        `Extra A: €${extraA.toFixed(2)}`;
+        `Extra A: €${a.toFixed(2)}`;
 
     document.getElementById("summaryDeductionB").textContent =
-        `Extra B: €${extraB.toFixed(2)}`;
+        `Extra B: €${b.toFixed(2)}`;
 
     document.getElementById("summaryNet").textContent =
-        `Net: €${net.toFixed(2)}`;
+        `Net Pay: €${net.toFixed(2)}`;
+
+    return {
+        lohn,
+        rv,
+        a,
+        b,
+        net
+    };
 }
 
 /* ============================================================
-   EXPORT (if needed in other modules)
+   Export globally so app.js can use it
 ============================================================ */
 window.computePayroll = computePayroll;
