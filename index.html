@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shift Tracker 2.0</title>
+    <title>Shift Tracker 3.0</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
@@ -11,8 +11,8 @@
     <!-- Styles -->
     <link rel="stylesheet" href="style.css" />
 
-    <!-- Manifest (PWA) -->
-    <link rel="manifest" href="manifest.json" />
+    <!-- Manifest for PWA -->
+    <link rel="manifest" href="manifest.json">
 
     <!-- Service Worker -->
     <script>
@@ -26,21 +26,22 @@
 
     <!-- ACTIVE SHIFT BANNER -->
     <div id="activeShiftBanner" class="active-banner hidden">
-        <span id="activeShiftText">Shift Running...</span>
+        <span id="activeShiftText">Shift in progress…</span>
         <button id="bannerClockOutBtn" class="banner-btn">Clock Out</button>
     </div>
 
-    <!-- MAIN APP -->
+    <!-- MAIN APP (HOME TAB) -->
     <div id="app">
+        <h1 class="title">Shift Tracker 3.0</h1>
 
-        <!-- Floating Buttons (IN / OUT / Holiday) -->
+        <!-- Floating IN/OUT/Holiday Buttons -->
         <div class="fab-container">
             <button id="clockInBtn" class="fab fab-in">IN</button>
             <button id="clockOutBtn" class="fab fab-out">OUT</button>
             <button id="holidayBtn" class="fab fab-holiday">H</button>
         </div>
 
-        <h1 class="title">Shift Tracker 2.0</h1>
+        <!-- STATUS TEXT -->
         <p id="status" class="status">Ready</p>
 
         <!-- SHIFT LIST -->
@@ -57,25 +58,58 @@
 
     <!-- SUMMARY TAB -->
     <div id="summaryTab" class="tab hidden">
-        <h2 class="title">Monthly Summary</h2>
 
-        <p id="summaryHours" class="summary-line">Total Hours: 0</p>
-        <p id="summaryGross" class="summary-line">Gross Pay: €0</p>
+        <h2 class="title">Current Month Summary</h2>
 
-        <h3 class="section-title">Deductions</h3>
-        <p id="summaryDeductionLohn" class="summary-line">Lohnsteuer: €0</p>
-        <p id="summaryDeductionRV" class="summary-line">Pension (RV): €0</p>
-        <p id="summaryDeductionA" class="summary-line">Extra A: €0</p>
-        <p id="summaryDeductionB" class="summary-line">Extra B: €0</p>
+        <p id="currentSummaryMonth" class="summary-title"></p>
 
-        <h3 class="section-title">Net Pay</h3>
-        <p id="summaryNet" class="summary-total">Net: €0</p>
+        <p id="summaryHours" class="summary-line"></p>
+        <p id="summaryShifts" class="summary-line"></p>
+        <p id="summaryGross" class="summary-line"></p>
+
+        <h3>DEDUCTIONS</h3>
+        <p id="summaryDeductionLohn" class="summary-line"></p>
+        <p id="summaryDeductionRV" class="summary-line"></p>
+        <p id="summaryDeductionA" class="summary-line"></p>
+        <p id="summaryDeductionB" class="summary-line"></p>
+
+        <h2 id="summaryNet" class="summary-total"></h2>
+
+        <hr style="margin:20px 0; opacity:0.3;">
+
+        <!-- Past Month Selector -->
+        <h2 class="title">View Past Months</h2>
+
+        <select id="monthSelector" class="month-dropdown">
+            <option value="">Select a month</option>
+        </select>
+
+        <!-- Past Month Summary (Hidden Until Month is Selected) -->
+        <div id="pastSummarySection" class="hidden">
+
+            <h2 id="pastSummaryTitle" class="title"></h2>
+
+            <p id="pastHours" class="summary-line"></p>
+            <p id="pastShifts" class="summary-line"></p>
+            <p id="pastGross" class="summary-line"></p>
+
+            <h3>DEDUCTIONS</h3>
+            <p id="pastDeductionLohn" class="summary-line"></p>
+            <p id="pastDeductionRV" class="summary-line"></p>
+            <p id="pastDeductionA" class="summary-line"></p>
+            <p id="pastDeductionB" class="summary-line"></p>
+
+            <h2 id="pastNet" class="summary-total"></h2>
+
+            <button id="exportCSVBtn" class="save-btn">Export CSV</button>
+        </div>
 
         <button onclick="openTab('home')" class="back-btn">Back</button>
     </div>
 
     <!-- SETTINGS TAB -->
     <div id="settingsTab" class="tab hidden">
+
         <h2 class="title">Payroll Settings</h2>
 
         <div class="settings-group">
@@ -105,9 +139,10 @@
 
         <button onclick="saveSettings()" class="save-btn">Save Settings</button>
         <button onclick="openTab('home')" class="back-btn">Back</button>
+
     </div>
 
-    <!-- EDIT SHIFT MODAL (SLIDE-UP PANEL) -->
+    <!-- EDIT SHIFT MODAL -->
     <div id="editModal" class="modal hidden">
         <div class="modal-content">
             <h2>Edit Shift</h2>
@@ -129,10 +164,11 @@
         </div>
     </div>
 
-    <!-- SCRIPTS -->
-    <script src="app.js"></script>
-    <script src="payroll.js"></script>
+    <!-- JS SCRIPTS -->
     <script src="settings.js"></script>
+    <script src="payroll.js"></script>
+    <script src="app.js"></script>
 
 </body>
 </html>
+
