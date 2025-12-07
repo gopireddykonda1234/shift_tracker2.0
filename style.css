@@ -44,32 +44,6 @@ body {
     gap: 4px;
 }
 
-.shift-buttons {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.edit-btn,
-.delete-btn {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.edit-btn {
-    background: #76ff03;
-    color: #000;
-}
-
-.delete-btn {
-    background: #ff5252;
-    color: #fff;
-}
-
 /* FLOATING ACTION BUTTONS */
 .fab-container {
     position: fixed;
@@ -130,26 +104,13 @@ body {
     color: #76ff03;
 }
 
-/* TABS */
+/* TAB CONTAINER */
 .tab {
     padding: 20px;
 }
 
 .hidden {
     display: none;
-}
-
-.back-btn {
-    margin-top: 20px;
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: #76ff03;
-    color: #000;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: 600;
 }
 
 /* SUMMARY PAGE */
@@ -163,6 +124,24 @@ body {
     font-weight: 600;
     margin-top: 20px;
     color: #76ff03;
+}
+
+.summary-title {
+    text-align: center;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+/* DROPDOWN FOR MONTH SELECTOR */
+.month-dropdown {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #1f1f1f;
+    color: #fff;
+    border-radius: 8px;
+    border: 1px solid #444;
+    margin-bottom: 20px;
 }
 
 /* SETTINGS PAGE */
@@ -195,6 +174,19 @@ body {
     margin-top: 20px;
 }
 
+.back-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #76ff03;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 /* ACTIVE SHIFT BANNER */
 .active-banner {
     position: fixed;
@@ -219,7 +211,7 @@ body {
     cursor: pointer;
 }
 
-/* MODAL (SLIDE-UP PANEL FOR EDIT SHIFT) */
+/* EDIT SHIFT MODAL */
 .modal {
     position: fixed;
     bottom: 0;
