@@ -1,56 +1,24 @@
-/* ============================================================
-   SERVICE WORKER – SHIFT TRACKER 2.0
-   Enables offline support and caching for PWA install.
-============================================================ */
+{
+  "name": "Shift Tracker 3.0",
+  "short_name": "ShiftTracker",
+  "description": "Track work hours, wages, holidays, and monthly pay with automatic payroll calculation.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#76ff03",
+  "orientation": "portrait-primary",
 
-const CACHE_NAME = "shift-tracker-v1";
-const FILES_TO_CACHE = [
-    "index.html",
-    "style.css",
-    "app.js",
-    "payroll.js",
-    "settings.js",
-    "manifest.json",
-    "icons/icon-192.png",
-    "icons/icon-512.png"
-];
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
 
-/* INSTALL SERVICE WORKER */
-self.addEventListener("install", event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => {
-            return cache.addAll(FILES_TO_CACHE);
-        })
-    );
-    self.skipWaiting();
-});
-
-/* ACTIVATE SERVICE WORKER */
-self.addEventListener("activate", event => {
-    event.waitUntil(
-        caches.keys().then(keys => {
-            return Promise.all(
-                keys.map(key => {
-                    if (key !== CACHE_NAME) {
-                        return caches.delete(key);
-                    }
-                })
-            );
-        })
-    );
-    self.clients.claim();
-});
-
-/* FETCH HANDLER */
-self.addEventListener("fetch", event => {
-    event.respondWith(
-        caches.match(event.request).then(response => {
-            return (
-                response ||
-                fetch(event.request).catch(() =>
-                    caches.match("index.html")
-                )
-            );
-        })
-    );
-});
